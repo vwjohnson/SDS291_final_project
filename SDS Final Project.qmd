@@ -10,7 +10,6 @@ library(tidyverse)
 data(HI)
 ```
 
-
 ```{r}
 HI |> ggplot(aes(x= experience, y = whrswk)) + geom_smooth()
 ```
