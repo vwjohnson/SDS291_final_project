@@ -1,0 +1,11 @@
+---
+title: "SDS Final Project"
+author: "Jackie, Virginia, and Naomi"
+format: html
+---
+
+```{r}
+library(Ecdat)
+data(HI)
+```
+
