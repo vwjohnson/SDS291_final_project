@@ -1,32 +1,18 @@
 ---
 title: "SDS Final Project"
 author: "Jackie, Virginia, and Naomi"
-format: html
+format:
+  pdf:
+    embed-resources: true
+execute: 
+  echo: false
+  warning: false
+  cache: true
 ---
 
 ```{r}
 library(Ecdat)
 library(tidyverse)
 data(HI)
-```
-
-```{r}
-HI |> ggplot(aes(x= experience, y = whrswk)) + geom_smooth()
-```
-
-```{r}
-HI |> ggplot(aes(x = region, y = whrswk, fill = whi)) + geom_col()
-```
-
-```{r}
-HI |> ggplot(aes(x= experience, y = whrswk, color = whi)) + geom_smooth()
-```
-
-```{r}
-HI |> ggplot(aes(x= education, y = whrswk, fill = whi)) + geom_col()
-```
-
-```{r}
-HI |> ggplot(aes(x= education, y = whrswk, fill = hhi)) + geom_col()
 ```
 
