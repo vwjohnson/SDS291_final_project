@@ -1,11 +1,18 @@
 ---
 title: "SDS Final Project"
 author: "Jackie, Virginia, and Naomi"
-format: html
+format:
+  pdf:
+    embed-resources: true
+execute: 
+  echo: false
+  warning: false
+  cache: true
 ---
 
 ```{r}
 library(Ecdat)
+library(tidyverse)
 data(HI)
 ```
 
