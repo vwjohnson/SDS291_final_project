@@ -1,6 +1,12 @@
 ---
-title: "virginia"
-format: html
+title: "Methods Section"
+author: "Virginia Johnson"
+format:
+  html:
+    embed-resources: true
+execute: 
+  echo: false
+  warning: false
 ---
 ```{r, echo=FALSE}
 suppressMessages(library(Ecdat))
