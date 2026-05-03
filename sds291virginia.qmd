@@ -4,8 +4,8 @@ format: html
 ---
 ```{r, echo=FALSE}
 suppressMessages(library(Ecdat))
+library(tidyverse)
 data(HI)
-HI <- as.data.frame(HI)
 ```
 
 # Methods
@@ -15,23 +15,9 @@ HI <- as.data.frame(HI)
 The response variable we used in our analysis is a binary variable for whether or not the wife has her own health insurance. The primary explanatory variable is the husband’s income, in thousands of dollars, which we hypothesize will have a negative relationship with the likelihood the wife has her own health insurance. In addition to the husband’s income, we used an explanatory variable for education which may be associated with the likelihood of the wife having her own health insurance, beyond just her husband's income. The education variable is a factor split into six categories,  “<9years", "9-11years", "12years", "13-15years", "16years", ">16years". 
 
 ```{r}
-apply(HI, 2, class)
+HI$educ <- factor(HI$education, ordered = FALSE)
 ```
 
-```{r}
-
-HI$husby <- as.numeric(HI$husby)
-HI$whrswk <- as.numeric(HI$whrswk)
-HI$experience <- as.numeric(HI$experience)
-```
-
-
-```{r}
-HI <- HI |> mutate(education = factor(education, 
-                          levels = c("<9years", "9-11years", "12years", "13-15years", "16years", ">16years") ) )
-
-apply(HI, 2, class)
-```
 
 
 ## Analysis
@@ -52,14 +38,14 @@ summary(HI[, c("whi", "education", "husby")])
 ## Additive Model Summary
 
 ```{r, echo=FALSE}
-whi_model <- glm(whi ~ husby + education, data = HI, family = "binomial")
+whi_model <- glm(whi ~ husby + educ, data = HI, family = "binomial")
 summary(whi_model)
 ```
 
 ## Interaction Model Summary
 
 ```{r, echo=FALSE}
-ed_model <- glm(whi ~ husby * education, data = HI, family = "binomial")
+ed_model <- glm(whi ~ husby * educ, data = HI, family = "binomial")
 summary(ed_model)
 ```
 
@@ -68,7 +54,7 @@ summary(ed_model)
 ```{r, echo=FALSE}
 suppressWarnings(suppressMessages(library(ggeffects)))
 
-suppressMessages(prediction <- ggpredict(whi_model, terms = c("husby", "education")))
+suppressMessages(prediction <- ggpredict(whi_model, terms = c("husby", "educ")))
 plot(prediction)
 ```
 
