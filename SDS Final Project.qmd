@@ -17,4 +17,17 @@ data(HI)
 ```
 
 
+```{r}
+HI|> group_by(whi) |> ggplot(aes(y= husby, x = education, fill = whi)) + geom_col(position="dodge", stat="identity")
+```
 
+# Results
+
+Our regression is run on 22,272 observations, 15,620 of which were households in which wives worked more than zero hours a week. Our number of observations is not cut down from the priginial dataset due to us studying the same population, and no missing values being present. An observation unit in this instance is a single family household with a husband, wife, and any number of children, here ranging from 0 to 9. The median husband income is 25,000 dollars.
+
+In the additive model all coefficients but education.C were significant to the 0.05 level
+
+# Discussion
+
+## Limitations
+The data 

@@ -1,0 +1,91 @@
+---
+title: "virginia"
+format: html
+---
+```{r, echo=FALSE}
+suppressMessages(library(Ecdat))
+data(HI)
+HI <- as.data.frame(HI)
+```
+
+# Methods
+
+## Variables
+
+The response variable we used in our analysis is a binary variable for whether or not the wife has her own health insurance. The primary explanatory variable is the husband’s income, in thousands of dollars, which we hypothesize will have a negative relationship with the likelihood the wife has her own health insurance. In addition to the husband’s income, we used an explanatory variable for education which may be associated with the likelihood of the wife having her own health insurance, beyond just her husband's income. The education variable is a factor split into six categories,  “<9years", "9-11years", "12years", "13-15years", "16years", ">16years". 
+
+```{r}
+apply(HI, 2, class)
+```
+
+```{r}
+
+HI$husby <- as.numeric(HI$husby)
+HI$whrswk <- as.numeric(HI$whrswk)
+HI$experience <- as.numeric(HI$experience)
+```
+
+
+```{r}
+HI <- HI |> mutate(education = factor(education, 
+                          levels = c("<9years", "9-11years", "12years", "13-15years", "16years", ">16years") ) )
+
+apply(HI, 2, class)
+```
+
+
+## Analysis
+
+In order to analyze our two hypotheses, we fit two logistic regression models. The first model is an additive logistic regression model where the response variable is whether or not the wife has her own health insurance and the explanatory variables are husband’s income and education. We used this model to compare the likelihood of a wife having her own health insurance with her husband’s income, controlling for the wife’s level of education. The second model is an interaction model with the same variables which we used to find the effects of the husband’s income change based on the wife’s level of education. To test the significance of the effect of the husband’s income and the role of education in those effects, we did individual z-tests. 
+
+
+
+# Data Appendix
+
+## Data Summary
+
+```{r, echo=FALSE}
+summary(HI[, c("whi", "education", "husby")]) 
+```
+
+
+## Additive Model Summary
+
+```{r, echo=FALSE}
+whi_model <- glm(whi ~ husby + education, data = HI, family = "binomial")
+summary(whi_model)
+```
+
+## Interaction Model Summary
+
+```{r, echo=FALSE}
+ed_model <- glm(whi ~ husby * education, data = HI, family = "binomial")
+summary(ed_model)
+```
+
+## Probability of wife having health insurance by husband's income and education
+
+```{r, echo=FALSE}
+suppressWarnings(suppressMessages(library(ggeffects)))
+
+suppressMessages(prediction <- ggpredict(whi_model, terms = c("husby", "education")))
+plot(prediction)
+```
+
+
+
+## Checking Regression Assumptions
+
+### Collinearity
+
+```{r, echo=FALSE}
+suppressWarnings(suppressMessages(library(car)))
+vif(whi_model)
+```
+
+The VIF statistics are low so we do not need to be concerned about multicollinearity.
+
+### Independence
+
+The independence assumption is reasonable for this data set because the data is cross sectional. 
+
