@@ -18,7 +18,7 @@ data(HI)
 
 
 ```{r}
-HI|> group_by(whi) |> ggplot(aes(y= husby, x = education, fill = whi)) + geom_col(position="dodge", stat="identity")
+#HI|> group_by(whi) |> ggplot(aes(y= husby, x = education, fill = whi)) + geom_col(position="dodge", stat="identity")
 ```
 
 # Results
@@ -27,7 +27,14 @@ Our regression is run on 22,272 observations, 15,620 of which were households in
 
 In the additive model all coefficients were significant to the 0.001 level based on the z-tests. While all the coefficients in the interactive model remain significant, the coefficient for having 9-11 years of education drops down to significant only a a 0.05 significance level. The isolated effects of an additional thousand dollars of husband's income on wife's own job insurance status flips from negative to positive with the addition of the interaction terms relating husband's income to wife's educational level. Despite the addition of five more terms, the interaction model had a lower AIC then the additive model, and was significantly better in a G-test comparison, suggesting it is more useful in explaining wife's insurance through her own job.
 
+
+
 # Discussion
+
+Our goal here is to look at the effects of own educational attainment and husband's income in determining wife's insurance through own job status. This suggests a rejection of both of our null hypotheses. For each $1,000 increase in husband's wage, the odds of a wife having her own health insurance decrease by `r round(exp(-0.0096169),5)` times separate from wife's educational attainment. When looking at how this relationship changes when educational attainment is taken into account, there is a significant effect, visible in the significance of all of the coefficients in the interaction model. We see that the more education a wife has, the higher her odds of having insurance through her own job, and that when relating husband's income to education the odds of having own insurance decrease in all the groups compared to the baseline of less than 9 years of education, and the husband's income coefficient by itself is no longer negative. The amount of this percent decrease overall increases as education does, although it seems to decrease after 16 years, we can't fully determine the difference between 16 and more than 16 years of education. This suggests that the relationship between husband's income and wife's educational attainment matters, as more education means both a higher probability of a wife having insurance through her own job, and a sharper decrease in said probability as husband's income increases.
+
+Part of the reason for this significance in all coefficients is the relatively large number of observations. There is also to note the low risk of multicollinearity suggesting that this relationship is due to the independendt factors of each and not because they themselves are too closely tied.
+
 
 ## Limitations
 The data is from a very specific point in time, and might not be as applicable in other time periods, especially if other elements that contributed to multiple variables covered by the models had a relationship unseen by the model, or things like changes to how health insurance works and expectations and economic circumstances changing how likely women are to work could impact the applicability of this model in the modern day. While our low VIF statistics suggest we do not need to be particularly concerned with multicollinearity between terms included in our regression, the possibility that other elements unobserved could have significant
